@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int isprime(int n)
+{
+    for(int i = 2; i * i <= n; i++ )
+        if(n % i == 0)
+            return 0;
+    return 1;
+}
+
+int sumdigits(int n)
+{
+    int sum = 0;
+    while(n != 0)
+    {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+int sumyz(int n)
+{
+    int sum = 0;
+    int i = 2;
+    while(1){
+        if(n % i == 0){
+            sum += sumdigits(i);
+            if(isprime(n /= i))
+                break;
+        }
+        else
+            i++ ;
+    }
+    sum += sumdigits(n);
+    return sum;
+}
+
+int main()
+{
+    int n, k = 1;
+    while(scanf("%d", &n) && n != 0){ 
+        k = 1;
+        for(int i = n + 1; k == 1; i++){
+            if(!isprime(i)){
+                if(sumdigits(i) == sumyz(i)){
+                    printf("%d\n", i);
+                    k = 0;
+                }
+            }
+        }
+    }
+    return 0;
+}
